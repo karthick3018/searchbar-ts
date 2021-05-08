@@ -1,10 +1,11 @@
-import React,{useReducer} from 'react';
+import React,{useEffect,useReducer} from 'react';
 import ListItems from '../listOfNames';
 import InputBox from '../../ui/inputBox';
 import {Data} from '../../common/data';
+import {useDebounce} from '../../common/useDebounceHook';
 
 type Actions =
-  | { type: 'SEARCH_INITIATED', searchQuery: string }
+  | { type: 'SEARCH_RESULTS', updatedList: ListTypes[] }
   | { type: 'INSERT_NAME', name: string }
   | { type: 'ON_INPUT_CHANGE', value: string }
   | { type: 'RESET'}
@@ -17,25 +18,31 @@ interface ListTypes {
   
 interface IState {
     friendList: ListTypes[],
+    defaultFriendList : ListTypes[],
     searchValue : string
 }
 
-const initialState: IState = { friendList: Data, searchValue:''};
+const initialState: IState = { defaultFriendList: Data, friendList: Data, searchValue:''};
 
 const reducer: React.Reducer<IState, Actions> = (state, action) => {
   switch (action.type) {
-    case 'SEARCH_INITIATED':
-      return { ...state };
-      
     case 'INSERT_NAME':
-      const insertedValue = handleNewInsertion(state?.friendList,action.name);
-      return {...state, friendList:insertedValue,searchValue:'' }
+      const updatedListAfterAddingName = handleNewInsertion(state?.defaultFriendList, action?.name);
+      return {
+        ...state, 
+        friendList: updatedListAfterAddingName, 
+        defaultFriendList: updatedListAfterAddingName, 
+        searchValue: '' 
+      }
 
     case 'ON_INPUT_CHANGE':
-       return {...state, searchValue:action.value }
+      return {...state, searchValue: action?.value }
+
+    case 'SEARCH_RESULTS':
+      return { ...state, friendList: action?.updatedList };
 
     case 'RESET':  
-    return {...state, friendList:Data,searchValue:'' }
+      return {...state, friendList: Data, searchValue:'' }
 
     default:
       throw new Error();
@@ -47,15 +54,29 @@ const handleNewInsertion = (friendList:Array<ListTypes>,name:string) => {
    let newName = {
      name: name,
      isFavorite: false,
-     id : friendList?.length
+     id : friendList?.length + 1
    }
    updatedState.push(newName);
    return updatedState;
 }
 
+const handleNameSearch = (defaultFriendList:Array<ListTypes>,name:string) => {
+  return defaultFriendList?.filter(eachFriend => eachFriend.name.toLowerCase().includes(name.toLowerCase()));
+}
+
 
 const InputField:React.FC= () => {
+
   const [state, dispatch] = useReducer<React.Reducer<IState, Actions>>(reducer, initialState);
+  const debouncedValue: string = useDebounce(state?.searchValue, 300);
+
+  useEffect(() => {
+    if(debouncedValue){
+     const filteredData = handleNameSearch(state?.defaultFriendList,debouncedValue);
+     dispatch({ type: 'SEARCH_RESULTS', updatedList: filteredData })
+    }
+  }, [debouncedValue])
+
 
   const handleOnKeyChange = (e:React.KeyboardEvent) => {
     if(e.key === "Enter"){
@@ -77,7 +98,7 @@ const InputField:React.FC= () => {
      handleChange ={handleChange}
      handleOnKeyChange = {handleOnKeyChange}
      value ={state?.searchValue}
-     placeholder="Enter your friend's  name"
+     placeholder="Enter your friend's name"
     />
     <ListItems
      friendList ={state?.friendList}

@@ -16,6 +16,7 @@ const ListItems = ({friendList}:TListItem) => {
     {friendList?.map((eachFriend=>(
       <p key={eachFriend?.id}>{eachFriend?.name}</p>
     )))} 
+    {friendList?.length === 0 && <p>No Such friend found ! Press 'Enter' to add in the list</p>}
     </>
   )
 }
