@@ -1,13 +1,13 @@
 import React from 'react';
 import Header from './header';
-import ListItems from './listOfNames';
+import InputField from './inputField';
 
 
 const Component = () => {
   return (
     <div>
       <Header/>
-      <ListItems/>
+      <InputField/>
     </div>
   )
 }

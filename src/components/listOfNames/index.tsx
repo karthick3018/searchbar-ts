@@ -1,9 +1,22 @@
 import React from 'react';
 
+interface ListTypes {
+  id: number,
+  isFavorite: boolean,
+  name: string,
+}
 
-const ListItems = () => {
+type TListItem = {
+  friendList : ListTypes[]
+}
+
+const ListItems = ({friendList}:TListItem) => {
   return (
-    <div>Items</div>
+    <>
+    {friendList?.map((eachFriend=>(
+      <p key={eachFriend?.id}>{eachFriend?.name}</p>
+    )))} 
+    </>
   )
 }
 
