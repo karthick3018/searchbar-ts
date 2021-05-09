@@ -20,10 +20,10 @@ const Pagination = ({totalList,currentPage,namesPerPage,handlePaginationChange}:
       { pageNumbers?.map((eachPageNumber:number)=>{
         return(
           <li
-          key={eachPageNumber}
-          id={eachPageNumber+''}
-          onClick={(event:any)=>handlePaginationChange(event)}
-          className="list-items"
+            key={eachPageNumber}
+            id={eachPageNumber+''}
+            onClick={(event:any)=>handlePaginationChange(event)}
+            className={`list-items ${currentPage === eachPageNumber ? 'active':''}`}
           >
           {eachPageNumber}
           </li>

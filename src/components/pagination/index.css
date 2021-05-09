@@ -35,3 +35,7 @@
   cursor: pointer;
   background-color: ghostwhite;
 }
+
+.active{
+  background-color:#e3e7eb;
+}

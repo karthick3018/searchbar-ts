@@ -53,7 +53,7 @@ const reducer: React.Reducer<IState, Actions> = (state, action) => {
       return {...state, searchValue: action?.value }
 
     case 'SEARCH_RESULTS':
-      return { ...state, friendList: action?.updatedList };
+      return { ...state, friendList: action?.updatedList,currentPage:1 };
 
     case 'ADD_FAVORITE':
       return { ...state, friendList: action?.updatedList ,defaultFriendList: action?.updatedList  };
@@ -65,7 +65,7 @@ const reducer: React.Reducer<IState, Actions> = (state, action) => {
       return { ...state, currentPage: action.page };
 
     case 'RESET':  
-      return {...state, friendList: Data, searchValue:'' }
+      return {...state, friendList: state?.defaultFriendList, searchValue:'',currentPage: 1, namesPerPage: 4 }
 
     default:
       throw new Error();
@@ -95,14 +95,15 @@ const InputField:React.FC= () => {
 
   useEffect(() => {
     if(debouncedValue){
-     const filteredData = handleNameSearch(state?.defaultFriendList,debouncedValue);
+     let filteredData = handleNameSearch(state?.defaultFriendList,debouncedValue);
+     filteredData = helper.sortTheNamesBasedOnFavorites(filteredData);
      dispatch({ type: 'SEARCH_RESULTS', updatedList: filteredData })
     }
   }, [debouncedValue])
 
 
   const handleOnKeyChange = (e:React.KeyboardEvent) => {
-    if(e.key === "Enter"){
+    if(e.key === "Enter" && state?.searchValue){
       e.preventDefault();
       dispatch({ type: 'INSERT_NAME', name: state?.searchValue })
     }
@@ -117,7 +118,6 @@ const InputField:React.FC= () => {
 
   const handleAddToFavorite = (id:number) => {
     let updatedList = helper.addNameToFavorite({friendList: state?.friendList,id});
-    updatedList = helper.sortTheNamesBasedOnFavorites(updatedList);
     dispatch({ type: 'ADD_FAVORITE', updatedList })
   }
 
@@ -141,7 +141,7 @@ const InputField:React.FC= () => {
      />
     </div>
     <ListItems
-     friendList ={helper?.paginationLogic(state?.friendList,state.currentPage,state?.namesPerPage)}
+     friendList ={helper?.paginationLogic(state?.friendList,state?.currentPage,state?.namesPerPage)}
      handleAddToFavorite = {handleAddToFavorite}
      handleDelete ={handleDelete}
     />
