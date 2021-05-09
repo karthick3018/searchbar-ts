@@ -14,8 +14,10 @@ const Pagination = ({totalList,currentPage,namesPerPage,handlePaginationChange}:
     pageNumbers.push(i);
   }
   return (
-    <div className="pagination-wrapper">
-      {pageNumbers?.map((eachPageNumber:number)=>{
+    <>
+    {pageNumbers?.length ?
+      <div className="pagination-wrapper">
+      { pageNumbers?.map((eachPageNumber:number)=>{
         return(
           <li
           key={eachPageNumber}
@@ -26,7 +28,8 @@ const Pagination = ({totalList,currentPage,namesPerPage,handlePaginationChange}:
           {eachPageNumber}
           </li>
         )})}
-    </div>
+    </div>:''}
+    </>
   )
 }
 

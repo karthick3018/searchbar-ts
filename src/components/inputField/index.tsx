@@ -115,8 +115,8 @@ const InputField:React.FC= () => {
     dispatch ({type:'RESET'})
   }
 
-  const handleAddToFavorite = (index:number) => {
-    let updatedList = helper.addNameToFavorite({friendList: state?.friendList,index});
+  const handleAddToFavorite = (id:number) => {
+    let updatedList = helper.addNameToFavorite({friendList: state?.friendList,id});
     updatedList = helper.sortTheNamesBasedOnFavorites(updatedList);
     dispatch({ type: 'ADD_FAVORITE', updatedList })
   }

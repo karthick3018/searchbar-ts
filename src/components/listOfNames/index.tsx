@@ -20,7 +20,7 @@ type TListItem = {
 const ListItems = ({friendList,handleAddToFavorite,handleDelete}:TListItem) => {
   return (
     <div className="list-wrapper">
-    {friendList?.map(((eachFriend,index)=>(
+    {friendList?.map(((eachFriend)=>(
       <div className="flex-wrapper list" key={eachFriend?.id}>
         <div>
           <p className="name-text">{eachFriend?.name} </p>

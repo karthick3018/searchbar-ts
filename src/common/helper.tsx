@@ -5,15 +5,11 @@ interface ListTypes {
   name: string,
 }
 
-type TaddNameToFavorite = {
-  friendList : ListTypes[],
-  index: number
-}
-
-type TdeleteName= {
+type TupdateProps = {
   friendList : ListTypes[],
   id: number
 }
+
 
 export const sortTheNamesBasedOnFavorites = (friendList:Array<ListTypes>) => {
  let sortedValues =  friendList?.sort((name1:ListTypes, name2:ListTypes)=> {
@@ -29,12 +25,14 @@ export const paginationLogic = (friendList:Array<ListTypes>,currentPage:number,n
   return currentNames
 }
 
-export const addNameToFavorite = ({friendList,index}:TaddNameToFavorite) => {
+export const addNameToFavorite = ({friendList,id}:TupdateProps) => {
   let updatedList = [...friendList];
+  let index = updatedList.findIndex(eachItem => eachItem.id === id);
   updatedList[index].isFavorite =  !updatedList[index].isFavorite;
-  return updatedList;
+  return updatedList
+
 }
 
-export const deleteName = ({friendList,id}:TdeleteName) => {
+export const deleteName = ({friendList,id}:TupdateProps) => {
   return friendList.filter(eachName=>eachName.id !== id);
 }
