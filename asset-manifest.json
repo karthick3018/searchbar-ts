@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/habtik-task/static/css/main.405ccf3c.chunk.css",
-    "main.js": "/habtik-task/static/js/main.70fab111.chunk.js",
-    "main.js.map": "/habtik-task/static/js/main.70fab111.chunk.js.map",
+    "main.js": "/habtik-task/static/js/main.c6ab8cf3.chunk.js",
+    "main.js.map": "/habtik-task/static/js/main.c6ab8cf3.chunk.js.map",
     "runtime-main.js": "/habtik-task/static/js/runtime-main.78d2e975.js",
     "runtime-main.js.map": "/habtik-task/static/js/runtime-main.78d2e975.js.map",
     "static/js/2.38882602.chunk.js": "/habtik-task/static/js/2.38882602.chunk.js",
@@ -20,6 +20,6 @@
     "static/js/runtime-main.78d2e975.js",
     "static/js/2.38882602.chunk.js",
     "static/css/main.405ccf3c.chunk.css",
-    "static/js/main.70fab111.chunk.js"
+    "static/js/main.c6ab8cf3.chunk.js"
   ]
 }
