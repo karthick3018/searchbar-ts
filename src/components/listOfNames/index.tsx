@@ -18,6 +18,13 @@ type TListItem = {
 
 
 const ListItems = ({friendList,handleAddToFavorite,handleDelete}:TListItem) => {
+
+  const confirmDelete = (id:number) => {
+    if(window?.confirm("Are you sure you want to delete from list?")) {
+      handleDelete(id)
+   }
+  }
+  
   return (
     <div className="list-wrapper">
     {friendList?.map(((eachFriend)=>(
@@ -32,7 +39,7 @@ const ListItems = ({friendList,handleAddToFavorite,handleDelete}:TListItem) => {
             <img src={eachFriend?.isFavorite?SelectedStar:StarIcon} alt="favorite" />
           </figure>
         </span>
-        <span onClick={()=>handleDelete(eachFriend?.id)}>
+        <span onClick={()=>confirmDelete(eachFriend?.id)}>
           <figure className="icon-figure">
             <img src={TrashIcon} alt="trash"/>
           </figure>

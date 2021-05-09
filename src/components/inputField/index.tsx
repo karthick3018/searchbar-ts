@@ -103,9 +103,12 @@ const InputField:React.FC= () => {
 
 
   const handleOnKeyChange = (e:React.KeyboardEvent) => {
-    if(e.key === "Enter" && state?.searchValue){
+    if(e.key === "Enter" && /^[a-zA-Z ]*$/.test(state?.searchValue) && state?.searchValue){
       e.preventDefault();
       dispatch({ type: 'INSERT_NAME', name: state?.searchValue })
+    }
+    else{
+      alert('Enter valid name !')
     }
   }
 
