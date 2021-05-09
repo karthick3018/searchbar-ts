@@ -3,9 +3,12 @@ import ListItems from '../listOfNames';
 import InputBox from '../../ui/inputBox';
 import {Data} from '../../common/data';
 import {useDebounce} from '../../common/useDebounceHook';
+import * as helper from '../../common/helper';
 
 type Actions =
   | { type: 'SEARCH_RESULTS', updatedList: ListTypes[] }
+  | { type: 'ADD_FAVORITE', updatedList: ListTypes[] }
+  | { type: 'DELETE_NAME', updatedList: ListTypes[] }
   | { type: 'INSERT_NAME', name: string }
   | { type: 'ON_INPUT_CHANGE', value: string }
   | { type: 'RESET'}
@@ -40,6 +43,12 @@ const reducer: React.Reducer<IState, Actions> = (state, action) => {
 
     case 'SEARCH_RESULTS':
       return { ...state, friendList: action?.updatedList };
+
+    case 'ADD_FAVORITE':
+      return { ...state, friendList: action?.updatedList ,defaultFriendList: action?.updatedList  };
+
+    case 'DELETE_NAME':
+      return { ...state, friendList: action?.updatedList ,defaultFriendList: action?.updatedList };
 
     case 'RESET':  
       return {...state, friendList: Data, searchValue:'' }
@@ -92,6 +101,16 @@ const InputField:React.FC= () => {
     dispatch ({type:'RESET'})
   }
 
+  const handleAddToFavorite = (index:number) => {
+    let updatedList = helper.addNameToFavorite({friendList: state?.friendList,index})
+    dispatch({ type: 'ADD_FAVORITE', updatedList })
+  }
+
+  const handleDelete = (id:number) => {
+    let updatedList = helper.deleteName({friendList: state?.friendList,id})
+    dispatch({ type: 'DELETE_NAME', updatedList })
+  }
+
   return(
     <>
     <InputBox
@@ -102,6 +121,8 @@ const InputField:React.FC= () => {
     />
     <ListItems
      friendList ={state?.friendList}
+     handleAddToFavorite = {handleAddToFavorite}
+     handleDelete ={handleDelete}
     />
     </>
   )

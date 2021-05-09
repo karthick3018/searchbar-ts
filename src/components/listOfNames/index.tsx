@@ -7,14 +7,17 @@ interface ListTypes {
 }
 
 type TListItem = {
-  friendList : ListTypes[]
+  friendList : ListTypes[],
+  handleAddToFavorite: (index:number) => void,
+  handleDelete : (id:number) => void
 }
 
-const ListItems = ({friendList}:TListItem) => {
+
+const ListItems = ({friendList,handleAddToFavorite,handleDelete}:TListItem) => {
   return (
     <>
-    {friendList?.map((eachFriend=>(
-      <p key={eachFriend?.id}>{eachFriend?.name}</p>
+    {friendList?.map(((eachFriend,index)=>(
+      <p key={eachFriend?.id}>{eachFriend?.name} <span onClick={()=>handleAddToFavorite(index)}>F</span> <span onClick={()=>handleDelete(eachFriend?.id)}>D</span></p>
     )))} 
     {friendList?.length === 0 && <p>No Such friend found ! Press 'Enter' to add in the list</p>}
     </>
