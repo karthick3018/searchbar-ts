@@ -22,6 +22,13 @@ export const sortTheNamesBasedOnFavorites = (friendList:Array<ListTypes>) => {
 return sortedValues;
 }
 
+export const paginationLogic = (friendList:Array<ListTypes>,currentPage:number,namesPerPage:number) => {
+  const indexOfLastName = currentPage * namesPerPage;
+  const indexOfFirstName = indexOfLastName - namesPerPage;
+  const currentNames = friendList?.slice(indexOfFirstName, indexOfLastName);
+  return currentNames
+}
+
 export const addNameToFavorite = ({friendList,index}:TaddNameToFavorite) => {
   let updatedList = [...friendList];
   updatedList[index].isFavorite =  !updatedList[index].isFavorite;

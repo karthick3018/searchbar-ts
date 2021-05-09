@@ -1,5 +1,6 @@
 import React,{useEffect,useReducer} from 'react';
 import ListItems from '../listOfNames';
+import Pagination from '../pagination';
 import InputBox from '../../ui/inputBox';
 import {Data} from '../../common/data';
 import {useDebounce} from '../../common/useDebounceHook';
@@ -11,6 +12,7 @@ type Actions =
   | { type: 'DELETE_NAME', updatedList: ListTypes[] }
   | { type: 'INSERT_NAME', name: string }
   | { type: 'ON_INPUT_CHANGE', value: string }
+  | { type: 'ON_PAGE_CHANGE', page: number }
   | { type: 'RESET'}
 
 interface ListTypes {
@@ -22,13 +24,17 @@ interface ListTypes {
 interface IState {
     friendList: ListTypes[],
     defaultFriendList : ListTypes[],
-    searchValue : string
+    searchValue : string,
+    currentPage: number,
+    namesPerPage : number
 }
 
 const initialState: IState = { 
   defaultFriendList: helper.sortTheNamesBasedOnFavorites(Data), 
   friendList: helper.sortTheNamesBasedOnFavorites(Data),
-  searchValue:''
+  searchValue:'',
+  currentPage: 1,
+  namesPerPage: 4
 };
 
 const reducer: React.Reducer<IState, Actions> = (state, action) => {
@@ -53,6 +59,9 @@ const reducer: React.Reducer<IState, Actions> = (state, action) => {
 
     case 'DELETE_NAME':
       return { ...state, friendList: action?.updatedList ,defaultFriendList: action?.updatedList };
+
+    case 'ON_PAGE_CHANGE':
+      return { ...state, currentPage: action.page };
 
     case 'RESET':  
       return {...state, friendList: Data, searchValue:'' }
@@ -116,6 +125,10 @@ const InputField:React.FC= () => {
     dispatch({ type: 'DELETE_NAME', updatedList })
   }
 
+  const handlePaginationChange = (event:any) => {
+    dispatch({ type: 'ON_PAGE_CHANGE', page: +event?.target?.id })
+  }
+
   return(
     <>
     <InputBox
@@ -125,9 +138,15 @@ const InputField:React.FC= () => {
      placeholder="Enter your friend's name"
     />
     <ListItems
-     friendList ={state?.friendList}
+     friendList ={helper?.paginationLogic(state?.friendList,state.currentPage,state?.namesPerPage)}
      handleAddToFavorite = {handleAddToFavorite}
      handleDelete ={handleDelete}
+    />
+    <Pagination 
+     totalList = {state?.friendList?.length}
+     currentPage = {state?.currentPage}
+     namesPerPage ={state?.namesPerPage}
+     handlePaginationChange = {handlePaginationChange}
     />
     </>
   )

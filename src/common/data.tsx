@@ -1,6 +1,6 @@
 export const Data = [
   {
-    name:'karthick Raja',
+    name:'Karthick Raja',
     isFavorite: true,
     id:1
   },
