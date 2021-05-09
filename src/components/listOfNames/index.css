@@ -1,0 +1,46 @@
+.list-wrapper{
+  min-height: 302px;
+}
+
+.flex-wrapper{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.list{
+  line-height: 1.2;
+  padding: 15px 10px;
+  border-bottom: 1px solid #e4e7eb
+}
+
+.list:last-child{
+  border:none
+}
+
+.icon-figure{
+  margin: 5px;
+  border: 1px solid #e3e7eb;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.icon-figure:hover{
+  cursor: pointer;
+  background-color: #f8f8ff;
+}
+
+.friend-text{
+  opacity: 0.5;
+  font-size: 12px;
+}
+
+.name-text{
+  margin: 5px 0px;
+  font-weight: 600;
+}
+
+.not-found{
+  opacity: 0.5;
+  text-align: center;
+}

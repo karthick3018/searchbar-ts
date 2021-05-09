@@ -1,4 +1,5 @@
 import React from "react";
+import './index.css'
 
 type TInputProps = {
   handleOnKeyChange: (e:React.KeyboardEvent)=>void,
@@ -16,6 +17,7 @@ const InputBox = ({handleOnKeyChange,value,placeholder,handleChange}:TInputProps
     placeholder={placeholder}
     autoFocus={true}
     autoCorrect="false"
+    className="input"
   />
   )
   

@@ -5,6 +5,7 @@ import InputBox from '../../ui/inputBox';
 import {Data} from '../../common/data';
 import {useDebounce} from '../../common/useDebounceHook';
 import * as helper from '../../common/helper';
+import './index.css';
 
 type Actions =
   | { type: 'SEARCH_RESULTS', updatedList: ListTypes[] }
@@ -131,12 +132,14 @@ const InputField:React.FC= () => {
 
   return(
     <>
-    <InputBox
-     handleChange ={handleChange}
-     handleOnKeyChange = {handleOnKeyChange}
-     value ={state?.searchValue}
-     placeholder="Enter your friend's name"
-    />
+    <div className="input-box-wrapper">
+     <InputBox
+       handleChange ={handleChange}
+       handleOnKeyChange = {handleOnKeyChange}
+       value ={state?.searchValue}
+       placeholder="Enter your friend's name"
+     />
+    </div>
     <ListItems
      friendList ={helper?.paginationLogic(state?.friendList,state.currentPage,state?.namesPerPage)}
      handleAddToFavorite = {handleAddToFavorite}

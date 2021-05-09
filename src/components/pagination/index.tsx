@@ -1,4 +1,5 @@
 import React from 'react';
+import './index.css';
 
 type TpaginationProps= {
   totalList: number,
@@ -13,18 +14,19 @@ const Pagination = ({totalList,currentPage,namesPerPage,handlePaginationChange}:
     pageNumbers.push(i);
   }
   return (
-    <>
-    {pageNumbers?.map((eachPageNumber:number)=>{
-      return(
-        <li
-         key={eachPageNumber}
-         id={eachPageNumber+''}
-         onClick={(event:any)=>handlePaginationChange(event)}
-        >
-        {eachPageNumber}
-        </li>
-      )})}
-    </>
+    <div className="pagination-wrapper">
+      {pageNumbers?.map((eachPageNumber:number)=>{
+        return(
+          <li
+          key={eachPageNumber}
+          id={eachPageNumber+''}
+          onClick={(event:any)=>handlePaginationChange(event)}
+          className="list-items"
+          >
+          {eachPageNumber}
+          </li>
+        )})}
+    </div>
   )
 }
 

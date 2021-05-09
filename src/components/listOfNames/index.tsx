@@ -1,4 +1,8 @@
 import React from 'react';
+import './index.css';
+import TrashIcon from './trash.svg';
+import StarIcon from './star.svg'
+import SelectedStar from './selectedStar.svg'
 
 interface ListTypes {
   id: number,
@@ -15,12 +19,29 @@ type TListItem = {
 
 const ListItems = ({friendList,handleAddToFavorite,handleDelete}:TListItem) => {
   return (
-    <>
+    <div className="list-wrapper">
     {friendList?.map(((eachFriend,index)=>(
-      <p key={eachFriend?.id}>{eachFriend?.name} <span onClick={()=>handleAddToFavorite(index)}>F</span> <span onClick={()=>handleDelete(eachFriend?.id)}>D</span></p>
+      <div className="flex-wrapper list" key={eachFriend?.id}>
+        <div>
+          <p className="name-text">{eachFriend?.name} </p>
+          <span className="friend-text">is your friend </span>
+        </div>
+       <div className="flex-wrapper">
+        <span onClick={()=>handleAddToFavorite(eachFriend?.id)}>
+        <figure className={`icon-figure ${eachFriend?.isFavorite ? 'favorite':''}`}>
+            <img src={eachFriend?.isFavorite?SelectedStar:StarIcon} alt="favorite" />
+          </figure>
+        </span>
+        <span onClick={()=>handleDelete(eachFriend?.id)}>
+          <figure className="icon-figure">
+            <img src={TrashIcon} alt="trash"/>
+          </figure>
+        </span>  
+      </div> 
+      </div>
     )))} 
-    {friendList?.length === 0 && <p>No Such friend found ! Press 'Enter' to add in the list</p>}
-    </>
+    {friendList?.length === 0 && <p className="not-found">No Such friend found ! Press 'Enter' to add in the list</p>}
+    </div>
   )
 }
 

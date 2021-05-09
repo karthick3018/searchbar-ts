@@ -1,14 +1,16 @@
-import React from 'react';
 import Header from './header';
 import InputField from './inputField';
+import './index.css';
 
 
 const Component = () => {
   return (
-    <div>
-      <Header/>
-      <InputField/>
-    </div>
+    <div className="container">
+      <div className="components-wrapper">
+        <Header/>
+        <InputField/>
+      </div>
+    </div>  
   )
 }
 
