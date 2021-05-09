@@ -79,7 +79,7 @@ const handleNewInsertion = (friendList:Array<ListTypes>,name:string) => {
      isFavorite: false,
      id : friendList?.length + 1
    }
-   updatedState.push(newName);
+   updatedState.unshift(newName);
    return updatedState;
 }
 
