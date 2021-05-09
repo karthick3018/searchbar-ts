@@ -36,3 +36,10 @@ export const addNameToFavorite = ({friendList,id}:TupdateProps) => {
 export const deleteName = ({friendList,id}:TupdateProps) => {
   return friendList.filter(eachName=>eachName.id !== id);
 }
+
+export const nameValidation = (name:string) => {
+  if(/^[a-zA-Z ]*$/.test(name) && name && name!== " ")
+  return true
+  else 
+  return false 
+}

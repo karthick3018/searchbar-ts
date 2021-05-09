@@ -52,4 +52,4 @@ const ListItems = ({friendList,handleAddToFavorite,handleDelete}:TListItem) => {
   )
 }
 
-export default ListItems;
+export default React.memo(ListItems);
