@@ -25,7 +25,11 @@ interface IState {
     searchValue : string
 }
 
-const initialState: IState = { defaultFriendList: Data, friendList: Data, searchValue:''};
+const initialState: IState = { 
+  defaultFriendList: helper.sortTheNamesBasedOnFavorites(Data), 
+  friendList: helper.sortTheNamesBasedOnFavorites(Data),
+  searchValue:''
+};
 
 const reducer: React.Reducer<IState, Actions> = (state, action) => {
   switch (action.type) {
@@ -102,7 +106,8 @@ const InputField:React.FC= () => {
   }
 
   const handleAddToFavorite = (index:number) => {
-    let updatedList = helper.addNameToFavorite({friendList: state?.friendList,index})
+    let updatedList = helper.addNameToFavorite({friendList: state?.friendList,index});
+    updatedList = helper.sortTheNamesBasedOnFavorites(updatedList);
     dispatch({ type: 'ADD_FAVORITE', updatedList })
   }
 

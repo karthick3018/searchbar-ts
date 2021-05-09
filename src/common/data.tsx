@@ -1,7 +1,7 @@
 export const Data = [
   {
     name:'karthick Raja',
-    isFavorite: false,
+    isFavorite: true,
     id:1
   },
   {
